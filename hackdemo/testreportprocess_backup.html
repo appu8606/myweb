@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<body>
+<button onclick="my()">test</button>
+<button onclick="getUrl()">url call</button>
+<a href='#' onclick=itrateMap('4299f32b-0a0a-4014-bb9e-03644dbddef8')>link text</a><br/>
+<p id="demo"></p>
+<p id="demo1"></p>
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script>
+/*$(document).ready(function(){
+$("#btnGet").click(function(){
+    $.ajax({
+    /*type: "POST",
+    url: "http://localhost:9090/rest/retailservice/config/reports",
+    data: '',
+        success: function(msg){
+		var displayString=JSON.stringify(msg);
+           document.getElementById("demo").innerHTML=displayString;
+        }
+		 headers: { 
+		 //'Access-Control-Allow-Origin': '*',
+		 'Access-Control-Allow-Origin':  '*',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+    },
+		url:'http://localhost:9090/rest/retailservice/reports/39b7f330-5c3e-4764-9e09-48b789951984/pdf',
+        data:JSON.stringify({"paramList":[{"name":"startDate","type":"date","value":"2017-10-01 00:00:00","displayName":"Start Date","valueStrategy":"Start of Month","validationStrategy":"mandatory"},{"name":"endDate","type":"date","value":"2017-10-02 00:00:00","displayName":"End Date","valueStrategy":"Current Date","validationStrategy":"mandatory"}]}),
+        type:'POST',
+        dataType:'text',
+        success:function(data){
+            //alert(data);
+            var displayString=data;
+			// document.getElementById("demo").innerHTML=displayString;
+			console.log(displayString);
+        }
+    })
+});
+});*/
+var currentReportId='39b7f330-5c3e-4764-9e09-48b789951984';
+var currentreportpara='{"paramList":[{"name":"startDate","type":"date","value":"2017-10-01 00:00:00","displayName":"Start Date","valueStrategy":"Start of Month","validationStrategy":"mandatory"},{"name":"endDate","type":"date","value":"2017-10-02 00:00:00","displayName":"End Date","valueStrategy":"Current Date","validationStrategy":"mandatory"}]}';
+function getUrl(){
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+				var javaobj = this.responseText;
+				//var cnrt = JSON.parse(javaobj);
+				//menuHtml="";
+				//traverse(cnrt);
+				console.log(javaobj);
+				//document.getElementById("dynamic").innerHTML=menuHtml;
+				//traverse(cnrt);*/																																																																																																	
+            }
+		}
+		var jasonVal=JSON.parse(currentreportpara);
+        xmlhttp.open("GET","getUrl.php?paramObject="+currentreportpara+"&reportId="+currentReportId,true);
+        xmlhttp.send();
+};
+function my(){
+		menuHtml="";
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+				var javaobj = this.responseText;
+				var cnrt = JSON.parse(javaobj);	
+				traverse(cnrt);
+				console.log(menuHtml);
+				document.getElementById("demo").innerHTML=menuHtml;
+				//traverse(cnrt);*/																																																																																																	
+            }
+		}
+        //var url = 'http://localhost:9090/rest/retailservice/config/reports';
+        //xmlhttp.open("POST","http://localhost:9090/rest/retailservice/config/reports",true);
+		xmlhttp.open('GET', 'testjasonphp.php?key=');
+		//xmlhttp.withCredentials = true;
+        xmlhttp.send();
+};
+function getUrlPath(){
+		menuHtml="";
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+				var javaobj = this.responseText;
+				var cnrt = JSON.parse(javaobj);	
+				traverse(cnrt);
+				console.log(menuHtml);
+				document.getElementById("demo").innerHTML=menuHtml;
+				//traverse(cnrt);*/																																																																																																	
+            }
+		}
+        //var url = 'http://localhost:9090/rest/retailservice/config/reports';
+        //xmlhttp.open("POST","http://localhost:9090/rest/retailservice/config/reports",true);
+		xmlhttp.open('GET', 'getUrl.php?key=hitthevakue',true);
+		//xmlhttp.withCredentials = true;
+        xmlhttp.send();
+};
+var level=0;
+var child=0;
+var levelValue="null";
+var menuHtml="";
+var reportMap= new Map();
+function traverse(obj) {
+	 if (obj instanceof Array) {
+        for (var i=0; i<obj.length; i++) {
+            if (typeof obj[i] == "object" && obj[i]) {
+                
+				if(obj[i]['name']!='startDate' && obj[i]['name']!='endDate' )// && obj[i]['name']!='reports' )// && obj[i]['name']!='generic')
+				{
+					console.log("IF 1"+i+obj[i]['name']);
+					if(obj[i]['config']==null)
+					{
+					if(obj[i]['name']!="generic"&&obj[i]['name']!="reports")
+					{
+						console.log("Folder");
+						//menuHtml+="<span class='glyphicon glyphicon-file'></span>"+obj[i]['name'].substr(2,obj[i]['name'].length)+"<span class='caret'></span><div id='dropdown-lvl 1' class='dropdown-content collapse'><ul>";
+					}
+					}
+					else
+					{
+						//menuHtml+="<a href='#'>"+obj[i]['name']+"</a><br>"
+						console.log("Report");
+						var objConfig=obj[i]['config'];
+						for (var configProp in objConfig)
+						{
+							if(configProp == "id")
+							{
+								//console.log(objConfig[configProp]);
+								reportMap.set(objConfig[configProp],objConfig);
+								console.log(objConfig[configProp]);
+								menuHtml+="<a href='#' onclick=itrateMap('"+objConfig[configProp]+"')>link text</a><br/>";
+							}
+						}
+						
+					}
+					traverse(obj[i]);
+					if(obj[i]['config']==null)
+					{
+						console.log("Folder");
+						//menuHtml+=" </ul></div>";
+					}
+					else
+					{
+						console.log("Report");
+					}
+				}
+            } else {
+                console.log("ELSE 1",i, obj[i]['name'])
+            }
+        }
+    } else {
+        for (var prop in obj) {
+            if (typeof obj[prop] == "object" && obj[prop]) {
+			if(level==0)				
+                traverse(obj[prop]);
+			else
+				level=0;
+            } else {
+				if(prop == "name" &&obj[prop]=="generic")
+					level=1;
+				/*if(prop == "name" && obj[prop]!="root" && obj[prop]!="reports"&& obj[prop]!="startDate"&& obj[prop]!="endDate"&&obj[prop]!="generic")
+				{
+					//document.getElementById("demo").innerHTML+=obj[prop]+"<br/>";
+				}*/
+			}
+               // console.log(prop, obj[prop]);
+            }
+        }
+    }
+
+function itrateMap(repId)
+{
+var dynamicHtml="";
+
+	var objReport=reportMap.get(repId);
+	for (var configProp in objReport)
+	{
+		if(configProp == "uiParams")
+		 {
+			//reportMap.set(objConfig[configProp],objConfig);
+			var pmList=objReport[configProp];
+			for (var prop in pmList) {
+				if (typeof pmList[prop] == "object" && pmList[prop]) {	
+					var obj=pmList[prop];
+					 if (obj instanceof Array) {
+						for (var i=0; i<obj.length; i++) {
+							if(obj[i]['type']=="date")
+							{
+								console.log("Date Field found");
+								document.getElementById("demo1").innerHTML+=obj[i]['displayName']+" : "+"<input type='date'><br><br>";
+								dynamicHtml+="<form><span><b>"+obj[i]['displayName']+"</b><form action='/action_page.php'> <input class='row1 clearfix' type='date' name='bday'></form></form></span>";
+							}
+						}
+					}
+				} else {
+						 console.log("Error the saved value in map is not an object array");
+				}
+            }
+				console.log(pmList);				
+		 }
+	}
+	console.log(repId);
+}	
+</script>
+</body>
+</html>

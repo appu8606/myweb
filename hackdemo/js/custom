@@ -1,0 +1,23 @@
+$( document ).ready(function() {
+	
+//Input focus style
+	
+	$("input, textarea").focus(function(){
+		$(this).parent().addClass("active");
+	});
+	$("input, textarea").focusout(function(){
+		$(this).parent().removeClass("active");
+	});
+	
+//Custom select box style
+	
+	 $("select").selectBoxIt();
+	 
+//Custom file upload button style
+	 
+	 $("#file").change(function(){
+    $(this).next().text($(this).val());
+});
+	
+});
+	

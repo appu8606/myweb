@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<body>
+<button onclick="my()">test</button>
+<p id="demo"></p>
+<p id="demo1"></p>
+<script>
+function my(){
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+				var javaobj = this.responseText;
+				var cnrt = JSON.parse(javaobj);	
+				traverse(cnrt);
+			/*	console.log(cnrt.childs[0].name);
+				traverse(cnrt);*/																																																																																																	
+            }
+		}
+        
+        xmlhttp.open("GET","testjasonphp.php?key=");
+        xmlhttp.send();
+};
+var level=0;
+var child=0;
+var levelValue="null";
+function traverse(obj) {
+	    if (obj instanceof Array) {
+        for (var i=0; i<obj.length; i++) {
+            if (typeof obj[i] == "object" && obj[i]) {
+                console.log(i);
+				traverse(obj[i]);
+            } else {
+                console.log(i, obj[i])
+            }
+        }
+    } else {
+        for (var prop in obj) {
+            if (typeof obj[prop] == "object" && obj[prop]) {
+                console.log(prop);	
+			if(level==0)				
+                traverse(obj[prop]);
+			else
+				level=0;
+				
+				<!-- level++;            -->
+				<!-- document.getElementById("demo1").innerHTML+=level; -->
+            } else {
+			//alert(prop, obj[prop]);
+				if(prop == "name" &&obj[prop]=="generic")
+					level=1;
+				if(prop == "name" && obj[prop]!="root" && obj[prop]!="reports"&& obj[prop]!="startDate"&& obj[prop]!="endDate"&&obj[prop]!="generic")
+				{
+					document.getElementById("demo").innerHTML+=obj[prop]+"<br/>";
+					
+					if obj contains 
+					
+				}
+			}
+               // console.log(prop, obj[prop]);
+            }
+        }
+    }
+<!-- function menu_popul(obj) -->
+<!-- { -->
+	<!-- var i,k,counter,j = []; -->
+	<!-- for(i=0;i<obj.childs.length;i++) -->
+	<!-- { -->
+		<!-- j[i]=obj.childs[i].name; -->
+	<!-- } -->
+	<!-- document.getElementById("demo1").innerHTML+=j; -->
+<!-- }	 -->
+
+			
+</script>
+</body>
+</html>
